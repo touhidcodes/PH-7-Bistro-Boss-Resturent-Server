@@ -21,14 +21,22 @@ const client = new MongoClient(uri, {
 });
 
 const menuCollection = client.db("BistroDB").collection("MenuCollection");
+const reviewsCollection = client.db("BistroDB").collection("ReviewCollection");
 
 async function run() {
 	try {
 		// Connect the client to the server	(optional starting in v4.7)
 		await client.connect();
 
+		// get all menu
 		app.get("/menu", async (req, res) => {
 			const result = await menuCollection.find().toArray();
+			res.send(result);
+		});
+
+		// get all review
+		app.get("/reviews", async (req, res) => {
+			const result = await reviewsCollection.find().toArray();
 			res.send(result);
 		});
 
@@ -37,7 +45,8 @@ async function run() {
 		console.log(
 			"Pinged your deployment. You successfully connected to MongoDB!"
 		);
-	} finally {}
+	} finally {
+	}
 }
 run();
 
